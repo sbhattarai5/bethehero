@@ -1,0 +1,46 @@
+{% extends "displayquestion.html" %}
+{% block head_content %}
+<style type="text/css" media="screen">
+    #editor {
+        position: relative;
+        height: 300px;
+        width: 1000px;
+    }
+</style>
+{% endblock %}
+{% block body2_content %}
+<h3><u>Your Solution</u></h3>
+<form method='POST'  onsubmit="copyvalue()" enctype="multipart/form-data">
+  <input type="radio" name="solutionradio" value="text" onclick="displaytext()" checked required> Type Code
+  <input type="radio" name="solutionradio" value="file" onclick="displayfile()"> Upload file
+  <p id="psolution">
+    <div name="solution" id="editor" placeholder="Type your code here!"></div>
+    <input type="file" id="fileinput" name="solution" style="display: none">
+    <input type="hidden" id="textinput" name="codetext">
+  </p>
+   <input type="submit" value="Submit">
+</form>
+<script src={{ url_for('static', filename='ace.js') }} type="text/javascript" charset="utf-8"></script>
+<script>
+  var editor = ace.edit("editor");
+  editor.setShowPrintMargin(false);
+  editor.setTheme("ace/theme/solarized_dark");
+  editor.session.setMode("ace/mode/c_cpp");
+  editor.setFontSize("18px");
+  
+  function displaytext() {
+      document.getElementById("editor").style.display="block";
+      document.getElementById("fileinput").style.display="none";
+  }
+  function displayfile() {
+      document.getElementById("editor").style.display="none";
+      document.getElementById("fileinput").style.display="block";
+  }
+  function copyvalue() {
+      var editor = ace.edit("editor");
+      var code = editor.getValue();
+      document.getElementById("textinput").value=code;
+      return true;
+  }
+  </script>
+{% endblock %}

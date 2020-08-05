@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block body_content %}
+
+<div class="container-fluid">
+<h2 align="center"> Questions </h2>
+<table class="table table-sm table-bordered table-hover">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col"> Questionid </th>
+      <th scope="col"> Posted by </th>
+      <th scope="col"> Questiontitle </th>
+      <th scope="col"> Difficulty </th>
+      <th scope="col"> MaxKudos </th>
+      <th scope="col"> Success Rate </th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for question in Questions %}
+    <tr>
+      <td scope="row">{{ question["Questionid"] }}</td>
+      <td align="center"><a href={{ url_for('showprofile', Userid=question['Userid']) }}> {{ question["Username"] }}</a></td>
+      <td align="center"> <a href= {{ url_for('solvequestion', Questionid=question.Questionid) }}> {{ question["Questiontitle"] }} </a> </td>
+      <td align="center">
+        {% if question["Difficulty"] == 'H' %}
+        Hard
+        {% endif %}
+        {% if question["Difficulty"] == 'M' %}
+        Medium
+        {% endif %}
+        {% if question["Difficulty"] == 'E' %}
+        Easy
+        {% endif %}     
+      </td>
+      <td align="center">{{ question["Maxkudos"] }}</td>
+      <td align="center">
+        {% if question['Submissionscount'] != 0 %}
+        {{ question['Correctsubmissionscount'] / question['Submissionscount'] * 100 }}%
+        {% else %}
+        0%
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div> 
+{% endblock %}

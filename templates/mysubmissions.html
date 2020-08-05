@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block body_content %}
+
+<h2 align="center"> My Submissions </h2>
+<div class="container-fluid">
+  <table class="table table-sm table-bordered table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col"> Submissionid </th>
+        <th scope="col"> Questiontitle </th>
+        <th scope="col"> Remarks </th>
+        <th scope="col"> Kudos </th>
+        <th scope="col"> Maxkudos </th>
+        <th scope="col"> Submissiontime </th>
+        <th scope="col"> Code </th>
+      </tr>
+    </thead>
+    <tbody>
+  {% for submission in Submissions %}
+  <tr>
+    <td scope="row">{{ submission['Submissionid'] }}</td>
+    <td align="center"> <a href= {{ url_for('solvequestion', Questionid=submission['Questionid']) }}> {{ submission['Questiontitle'] }} </a> </td>
+    <td align="center">
+      {% if submission['Remarks'] == 'RA' %}
+         <font color="green">Correct Answer!</font>
+      {% endif %}
+      {% if submission['Remarks'] == 'WA' %}
+         <font color="red">Wrong Answer!</font>
+         {% endif %}
+      {% if submission['Remarks'] == 'TLE' %}
+         <font color="purple">Time Limit Exceeded!</font>
+         {% endif %}
+      {% if submission['Remarks'] == 'RE' %}
+         <font color="red">Runtime Error!</font>
+      {% endif %}
+      {% if submission['Remarks'] == 'CE' %}
+         <font color="red">Compilation Error!</font>
+      {% endif %}
+      {% if submission['Remarks'] == 'PJ' %}
+         <font color="orange">Pending Judgement!</font>
+      {% endif %}   
+    </td>
+    <td align="left">{{ submission['Kudos'] }}</td>
+    <td align="left">{{ submission['Maxkudos'] }}</td>
+    <td align="center">{{ submission['Submissiontime'] }}</td>
+    <td align="center"> <a href={{ url_for("downloadsubmittedcode", Submissionid=submission['Submissionid']) }}>Download link</a></td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

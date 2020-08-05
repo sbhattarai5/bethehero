@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block body_content %}
+<h2 align="center"> Unapproved Questions </h2>
+<table border=1 align="center" width=800>
+  <tr>
+    <th> Questionid </th>
+    <th> Username </th>
+    <th> Questiontitle </th>
+  </tr>
+  {% for question in Questions %}
+  <tr>
+    <td align="right">{{ question["Questionid"] }}</td> 
+    <td align="center"><a href={{ url_for('showprofile', Userid=question['Userid']) }}> {{ question["Username"] }}</a></td>
+    <td align="center"> <a href={{ url_for('approveordeclinequestion', Questionid=question.Questionid) }}> {{ question["Questiontitle"] }} </a> </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

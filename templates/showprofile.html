@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block head_content %}
+<style>
+  #profilepic {
+      float:left;
+      margin-right:100px;
+      margin-left: 50px;
+      width:150px;
+      height:150px;
+      border-radius:50%;
+  }
+</style>
+{% endblock %}
+{% block body_content %}
+<img id="profilepic" src={{ url_for('static', filename="pp" + (Otheruser.Userid)|string + ".jpg") }}>
+<p>
+  <table border=1 width=300>
+    <tr><td> Username  </td> <td align="center"> {{ Otheruser.Username }} </td></tr>
+    <tr><td> Kudos     </td> <td align="right"> {{Otheruser.Kudos }}  </td></tr>
+    <tr><td> Followers </td> <td align="right"> {{ Otheruser.Followers|length }} </td></tr>
+    <tr><td> Following </td> <td align="right"> {{ Otheruser.Followees|length }} </td></tr>
+  </table>
+
+  <br>
+  {% if User.Userid in Otheruser.Followers %}
+  <form action={{ url_for('unfollow', Followerid=User.Userid, Followeeid=Otheruser.Userid) }} method='POST'>
+    <input type="submit" value="Following">
+  </form>
+  {% else %}
+  <form action={{ url_for('follow', Followerid=User.Userid, Followeeid=Otheruser.Userid) }} method='POST'>
+    <input type="submit" value="Follow">
+  </form>
+  {% endif %}
+</p>
+{% endblock %}

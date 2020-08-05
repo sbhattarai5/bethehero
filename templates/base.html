@@ -1,0 +1,76 @@
+<html>
+  <head>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/custom.css">
+    <style>
+      ul.base {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background-color: #333;
+          position: fixed;
+          top: 0;
+          width: 100%;
+      }
+      
+      ul.base > li {
+          float: left;
+          border-right: 1px solid #bbb;
+      }
+
+      ul.base > li:last-child {
+          border-right: none;
+      }
+      
+      ul.base > li a {
+          display: block;
+          color: white;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+      }
+
+      ul.base > li a:hover {
+          background-color: #21215E;
+      }
+      
+    </style>
+    {% block head_content %}
+    {% endblock %}
+  </head>
+  <body leftmargin="0">
+    <ul class="base">
+      <li> <a href= {{ url_for('main') }}> BeTheHero </a> </li>
+      <li> <a href= {{ url_for('solve') }}> Solve </a> </li>
+      <li> <a href= {{ url_for('mysubmissions') }}> My Submissions </a> </li>
+      <li> <a href= {{ url_for('addquestion') }}> Add question </a> </li>
+      <li> <a href= {{ url_for('leaderboard') }}> Leaderboard </a> </li>
+      {% if User.Admin %}
+        <li> <a href = {{ url_for('showpendingquestions') }}> Approve Questions </a> </li>
+        {% endif %}
+      <li><a href={{ url_for('showusers', follower=-1, followee=-1)}}>Search Users</a></li>
+      <li><a href={{ url_for('showrecommendedusers') }}> Recommendations </a></li>  
+      <li style="float: right;">
+        <a href={{ url_for('showprofile', Userid=User.Userid) }} style="padding: 5"><img src={{ url_for('static', filename="pp" + (User.Userid)|string + ".jpg") }} style="width:40px;height:40px;border-radius:50%;"></a>
+      </li>
+      <li style="float: right">
+        <a href= {{ url_for('logout') }}>
+          Logout {{ User.Username }} </a>
+      </li>
+    </ul>
+    <br><br><br>
+    <div class="main-body" style="margin: 10">
+      {% with messages = get_flashed_messages() %}
+      <p style="color:red">
+        {% for message in messages %}
+          {{ message }} <br>
+        {% endfor %}
+      </p>
+      {% endwith %}
+      {% block body_content %}
+      {% endblock %}
+    </div>
+  </body>
+</html>

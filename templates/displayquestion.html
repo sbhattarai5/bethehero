@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block body_content %}
+  {% if msg %}
+    <p style="color: red">
+      {{ msg }}
+    </p>
+  {% endif %}
+    <h3 align="center"> <u>{{ Question.Questiontitle }}</u> </h3>
+  <hr>
+  <h3><u> Question statement</u></h3>
+  {% for line in Question.Questionstatement %}
+    {{ line }} <br>
+  {% endfor %}
+  <hr>
+  <h3> <u> Input Format </u> </h3>
+  {% for line in Question.Inputformat %}
+    {{ line }} <br>
+  {% endfor %}
+  <hr>
+  <h3><u> Output Format </u></h3>
+  {% for line in Question.Outputformat %}
+    {{ line }} <br>
+  {% endfor %}
+  <hr>
+  <h3> <u> Constraints </u> </h3>
+  {% for line in Question.Constraints %}
+    {{ line }} <br>
+  {% endfor %}
+  <hr>
+  <h3> <u> Sample Input </u> </h3>
+  {% for line in Question.Sampleinput %}
+    {{ line }} <br>
+  {% endfor %}
+  <hr>
+  <h3> <u> Sample Output </u> </h3>
+  {% for line in Question.Sampleoutput %}
+    {{ line }} <br>
+  {% endfor %}
+  <hr>
+  <h3> <u> Explanation </u> </h3>
+  {% for line in Question.Explanation %}
+    {{ line }} <br>
+  {% endfor %}
+  <hr>
+  {% block body2_content %}
+  {% endblock %}
+{% endblock %}

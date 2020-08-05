@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block body_content %}
+  <form method='POST' enctype="multipart/form-data">
+  Question title: <input type="text" placeholder="Question Title" name="Questiontitle" required>
+  <h2 align = "center"> Question statement </h2>
+  <input type="radio" value="file" name="qstatementradio"
+         onclick="displayfileupload('qstatement', 'Questionstatement')" required> File input
+  <input type="radio" value="text" name="qstatementradio"
+         onclick="displaytextarea('qstatement', 'Questionstatement')"> Text input
+  <p id="qstatement"></p>
+  <hr>
+
+  <h2 align = "center"> Input Format </h2>
+  <input type="radio" value="file" name="iformatradio"
+         onclick="displayfileupload('iformat', 'Inputformat')" required> File input
+  <input type="radio" value="text" name="iformatradio"
+         onclick="displaytextarea('iformat', 'Inputformat')"> Text input
+  <p id="iformat"></p>
+  <hr>
+  
+  <h2 align = "center"> Output Format </h2>
+  <input type="radio" value="file" name="oformatradio"
+         onclick="displayfileupload('oformat', 'Outputformat')" required> File input
+  <input type="radio" value="text" name="oformatradio"
+         onclick="displaytextarea('oformat', 'Outputformat')"> Text input
+  <p id="oformat"></p>
+  <hr>
+  
+  <h2 align = "center"> Constraints </h2>
+  <input type="radio" value="file" name="cradio"
+         onclick="displayfileupload('c', 'Contraints')" required> File input
+  <input type="radio" value="text" name="cradio"
+         onclick="displaytextarea('c', 'Constraints')"> Text input
+  <p id="c"></p>
+  <hr>
+  
+  <h2 align = "center"> Sample input </h2>
+  <input type="radio" value="file" name="sinputradio"
+         onclick="displayfileupload('sinput', 'Sampleinput')" required> File input
+  <input type="radio" value="radio" name="sinputradio"
+         onclick="displaytextarea('sinput', 'Sampleinput')"> Text input
+  <p id="sinput"></p>
+  <hr>
+  
+  <h2 align = "center"> Sample output </h2>
+  <input type="radio" value="file" name="soutputradio"
+         onclick="displayfileupload('soutput', 'Sampleoutput')" required> File input
+  <input type="radio" value="text" name="soutputradio"
+         onclick="displaytextarea('soutput', 'Sampleoutput')"> Text input
+  <p id="soutput"></p>
+  <hr>
+  
+  <h2 align = "center"> Explanation </h2>
+  <input type="radio" value="file" name="eradio"
+         onclick="displayfileupload('e', 'Explanation')" required> File input
+  <input type="radio" value="text" name="eradio"
+         onclick="displaytextarea('e', 'Explanation')"> Text input
+  <p id="e"></p>
+  <hr>
+
+  <h2 align = "center"> Test Case Input </h2>
+  <input type="radio" value="file" name="tcinputradio"
+         onclick="displayfileupload('tcinput', 'Testcaseinput')" required> File input
+  <input type="radio" value="text" name="tcinputradio"
+         onclick="displaytextarea('tcinput', 'Testcaseinput')"> Text input
+  <p id="tcinput"></p>
+  <hr>
+  
+  <h2 align = "center"> Test Case Output </h2>
+  <input type="radio" value="file" name="tcoutputradio"
+         onclick="displayfileupload('tcoutput', 'Testcaseoutput')" required> File input
+  <input type="radio" value="text" name="tcoutputradio"
+         onclick="displaytextarea('tcoutput', 'Testcaseoutput')"> Text input
+  <p id="tcoutput"></p>
+  <hr>
+  
+  <input type="submit" value="Submit">
+</form>
+
+<script>
+  function displayfileupload(id, name) {
+      document.getElementById(id).innerHTML =
+          '<input type="file" name="' + name + '" required>';
+  }
+  function displaytextarea(id, name) {
+      document.getElementById(id).innerHTML =
+          '<textarea name="' + name + '" style="overflow:scroll" rows="20" cols="150" required>';
+  }
+      
+</script>
+{% endblock %}
