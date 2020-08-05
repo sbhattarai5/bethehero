@@ -120,7 +120,6 @@ def unfollow(Followerid, Followeeid):
     if not check_session(): return redirect(url_for('login'))
     if int(Followerid) != session['logged_in']['Userid']:
         return redirect(url_for('main'))
-    print (Followerid, Followeeid)
     if dbmediator.isfollowing(Followerid, Followeeid).data:
         dbmediator.deletefollower(Followerid, Followeeid)
     return redirect(request.referrer)
