@@ -1,8 +1,14 @@
 ## TODO
-## Add recommendation
-## Immediately work for contests
-## Homepage
-## Contests
+## change password with validation (think about validation)
+## in feed show the approved question of the people you follow,
+## question somehowlike pp
+## "Solve problems and add question to get kudos"
+## Your kudos on top right probably
+## Change the add question layout
+## Let's think about contests (Remember public private question)
+## Add question statement with the stats in the feed
+## betheherologo in signin and signup
+## repair all the tables
 
 from flask import Flask, request, render_template, url_for, redirect, session, send_from_directory, flash
 

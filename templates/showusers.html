@@ -12,59 +12,69 @@
 </style>
 {% endblock %}
 {% block body_content %}
-<div id="searchbar">
-  <a href={{ url_for('showusers', follower=User.Userid, followee=-1) }} style="margin-right:20"> Only users you follow </a>
-  <a href={{ url_for('showusers', follower=-1, followee=User.Userid) }} style="margin-right:20"> Only users that follow you </a>
-  <a href={{ url_for('showusers', follower=-1, followee=-1) }} style="margin-right:20">All users</a>
-  <br><br>
-  <input type="text" id="keyword" onkeyup="filterresults()" placeholder="Search for Usernames...">
-  <p id="searchsummary" style="font-size:14;font-style:italic">{{ Allusers|length }} search results</p>
-  <hr><br>
+<div class="container">
+  <div id="searchbar">
+    <form class="form-inline">
+      <div class="input-group-prepend">
+        <span class="input-group-text">@</span>
+      </div>
+      <input type="text" id="keyword" onkeyup="filterresults()" class="form-control" placeholder="Username">
+    </form>
+    <br>
+    <p style="display: inline; float: right;">
+      Apply filters: 
+      <a href={{ url_for('showusers', follower=User.Userid, followee=-1) }} style="margin-right:20"> Followers </a> |
+      <a href={{ url_for('showusers', follower=-1, followee=User.Userid) }} style="margin-right:20"> Following </a> |
+      <a href={{ url_for('showusers', follower=-1, followee=-1) }} style="margin-right:20">All users</a>
+    </p>
+    <p id="searchsummary" style="display: inline;font-size:14;font-style:italic">{{ Allusers|length }} search results</p>
+    <hr><br>
+  </div>
+  <ul id="allusers" style="list-style-type: none;padding: 0;margin: 0;">
+    {% for user in Allusers %}
+    <li>
+      <img id="profilepic" src={{ url_for('static', filename="pp" + (user.Userid)|string + ".jpg") }}>
+      <p>
+        <table border=1 width=300>
+          <tr><td> Username  </td> <td align="center"> <a href={{ url_for('showprofile', Userid=user.Userid) }}>{{ user.Username }} </a> </td></tr>
+          <tr><td> Kudos     </td> <td align="right"> {{ user.Kudos }}  </td></tr>
+          <tr><td> Followers </td> <td align="right"> {{ user.Followers|length }} </td></tr>
+          <tr><td> Following </td> <td align="right"> {{ user.Followees|length }} </td></tr>
+        </table>
+        {% if User.Userid in user.Followers %}
+        <form action={{ url_for('unfollow', Followerid=User.Userid, Followeeid=user.Userid) }} method='POST'>
+          <input type="submit" value="Following">
+        </form>
+        {% else %}
+        <form action={{ url_for('follow', Followerid=User.Userid, Followeeid=user.Userid) }} method='POST'>
+          <input type="submit" value="Follow">
+        </form>
+        {% endif %}
+      </p>
+      <br><hr><br>
+    </li>
+    {% endfor %}
+  </ul>
+  <script>
+    function filterresults() {
+        var input, li, text, ul, counter;
+        counter = 0;
+        input = document.getElementById("keyword");
+        input = input.value.toUpperCase();
+        ul = document.getElementById("allusers");
+        li = ul.getElementsByTagName("li");
+        for (i = 0; i < li.length; ++i) {
+            text = li[i].getElementsByTagName("a")[0];
+            text = text.innerText;
+            if (text.toUpperCase().indexOf(input) > -1) {
+                li[i].style.display = "";
+                ++counter;
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+        document.getElementById("searchsummary").innerHTML = counter.toString() + " search results";
+    }
+  </script>
 </div>
-<ul id="allusers" style="list-style-type: none;padding: 0;margin: 0;">
-  {% for user in Allusers %}
-  <li>
-  <img id="profilepic" src={{ url_for('static', filename="pp" + (user.Userid)|string + ".jpg") }}>
-  <p>
-    <table border=1 width=300>
-      <tr><td> Username  </td> <td align="center"> <a href={{ url_for('showprofile', Userid=user.Userid) }}>{{ user.Username }} </a> </td></tr>
-      <tr><td> Kudos     </td> <td align="right"> {{ user.Kudos }}  </td></tr>
-      <tr><td> Followers </td> <td align="right"> {{ user.Followers|length }} </td></tr>
-      <tr><td> Following </td> <td align="right"> {{ user.Followees|length }} </td></tr>
-    </table>
-    {% if User.Userid in user.Followers %}
-    <form action={{ url_for('unfollow', Followerid=User.Userid, Followeeid=user.Userid) }} method='POST'>
-      <input type="submit" value="Following">
-    </form>
-    {% else %}
-    <form action={{ url_for('follow', Followerid=User.Userid, Followeeid=user.Userid) }} method='POST'>
-      <input type="submit" value="Follow">
-    </form>
-    {% endif %}
-  </p>
-  <br><hr><br>
-  </li>
-  {% endfor %}
-</ul>
-<script>
-  function filterresults() {
-      var input, li, text, ul, counter;
-      counter = 0;
-      input = document.getElementById("keyword");
-      input = input.value.toUpperCase();
-      ul = document.getElementById("allusers");
-      li = ul.getElementsByTagName("li");
-      for (i = 0; i < li.length; ++i) {
-          text = li[i].getElementsByTagName("a")[0];
-          text = text.innerText;
-          if (text.toUpperCase().indexOf(input) > -1) {
-              li[i].style.display = "";
-              ++counter;
-          } else {
-              li[i].style.display = "none";
-          }
-      }
-      document.getElementById("searchsummary").innerHTML = counter.toString() + " search results";
-  }
-</script>
 {% endblock %}

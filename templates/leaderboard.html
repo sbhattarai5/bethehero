@@ -2,24 +2,24 @@
 {% block body_content %}
 <div class="container">
   <h1 align="center"> Leaderboard </h1>
-  <table class="table table-sm table-bordered table-hover">
+  <table class="table table-sm table-bordered table-striped">
     <thead class="thead-light">
       <tr>
-        <th scope="col"> # </th>
-        <th scope="col"> Username </th>
-        <th scope="col"> Kudos </th>
+        <th class="text-center" scope="col"> # </th>
+        <th class="text-center" scope="col"> Username </th>
+        <th class="text-center" scope="col"> Kudos </th>
       </tr>
     </thead>
     <tbody>
       {% for user in Leaderboard %}
       <tr>
-        <th scope="row"> {{ loop.index }} </td>
-        <td align=center>
+        <th class="text-right" scope="row"> {{ loop.index }} </th>
+        <td class="text-center">
           <a href={{ url_for('showprofile', Userid=user['Userid']) }}>
             {{ user["Username"] }}
           </a>
         </td>
-        <td align=left> {{ user["Kudos"] }} </td>
+        <td class="text-right"> {{ user["Kudos"] }} </td>
       </tr>
       {% endfor %}
 </tbody>
