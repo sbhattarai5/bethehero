@@ -1,1 +1,1 @@
-"Hello world!" was printed 3 times as N was 3
+"Hello world!" was printed 3 times when N was 3
