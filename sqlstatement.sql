@@ -1,3 +1,4 @@
+-- All the table creation statements, used for automation
 -- using database
 
 USE bethehero;
